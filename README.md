@@ -1,98 +1,90 @@
-# IBM-Data-Science-Capstone-SpaceX
+# IBM Data Science Capstone: SpaceX
 
-# Introduction
+## Introduction
 
-![](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DS0701EN-SkillsNetwork/api/Images/landing_1.gif)
+![SpaceX Rocket Launch](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DS0701EN-SkillsNetwork/api/Images/landing_1.gif)
 
-## Background
-SpaceX, a leader in the space industry, strives to make space travel affordable for everyone. Its accomplishments include sending spacecraft to the international space station, launching a satellite constellation that provides internet access and sending manned missions to space. SpaceX can do this because the rocket launches are relatively inexpensive ($62 million per launch) due to its novel reuse of the first stage of its Falcon 9 rocket. Other providers, which are not able to reuse the first stage, cost upwards of $165 million each. By determining if the first stage will land, we can determine the price of the launch. To do this, we can use public data and machine learning models to predict whether SpaceX – or a competing company – can reuse the first stage.
+---
 
-## Explore
-* How payload mass, launch site, number of flights, and orbits affect first-stage landing success
-* Rate of successful landings over time
-* Best predictive model for successful landing (binary classification)
+### Background  
+SpaceX has revolutionized the aerospace industry by significantly lowering the costs of space travel, making it more accessible. The company’s achievements include manned spaceflights, launching satellites for global internet access, and missions to the International Space Station. A key reason for its cost efficiency is the reusable first stage of its Falcon 9 rockets, bringing launch costs down to $62 million compared to $165 million for competitors. Predicting whether this first stage can be reused plays a crucial role in estimating the price of launches. Using public data and machine learning, we aim to predict first-stage reusability.
 
-## Executive Summary
-The research attempts to identify the factors for a successful rocket landing. To make this determination, the following methodologies where used:
-* **Collect** data using SpaceX REST API and web scraping techniques
-* **Wrangle** data to create success/fail outcome variable
-* **Explore** data with data visualization techniques, considering the following factors: payload, launch site, flight number and yearly trend
-* **Analyze** the data with SQL, calculating the following statistics: total payload, payload range for successful launches, and total # of successful and failed outcomes
-* **Explore** launch site success rates and proximity to geographical markers
-* **Visualize** the launch sites with the most success and successful payload ranges
-* **Build Models** to predict landing outcomes using logistic regression, support vector machine (SVM), decision tree and K-nearest neighbor (KNN)
+---
+
+### Key Questions:
+1. How do payload mass, launch sites, number of flights, and orbits influence first-stage landing success?  
+2. How have success rates changed over time?  
+3. Which predictive model best classifies successful landings?
+
+---
+
+## Executive Summary  
+
+This project identifies factors contributing to successful rocket landings. The approach involves:  
+- **Data Collection:** Using SpaceX REST API and web scraping to gather data  
+- **Data Wrangling:** Creating a binary success variable  
+- **Exploration:** Visualizing factors like payload mass, launch site, flight frequency, and annual trends  
+- **Analysis:** Using SQL to compute statistics such as payload ranges for successful launches  
+- **Visualization:** Highlighting geographical factors influencing launch site success  
+- **Modeling:** Building predictive models, including logistic regression, SVM, decision trees, and KNN  
+
+---
 
 ## Results
 
-### Exploratory Data Analysis:
-* Launch success has improved over time
-* KSC LC-39A has the highest success rate among landing sites
-* Orbits ES-L1, GEO, HEO, and SSO have a 100% success rate
+### Data Insights:
+- Success rates have improved over time.  
+- The KSC LC-39A site boasts the highest success rate.  
+- Certain orbits (ES-L1, GEO, HEO, SSO) consistently achieve 100% success.
 
-### Visualization / Analytics:
-* Most launch sites are near the equator, and all are close to the coast
+### Geographical Observations:
+- Launch sites are near the equator, offering cost-saving benefits due to Earth's rotational speed.  
+- All sites are coastal, facilitating easier rocket retrieval.
 
-### Predictive Analytics
-* All models performed similarly on the test set. The decision tree model slightly outperformed when looking at .best_score_
+### Predictive Models:
+- All models performed similarly, with the decision tree model slightly outperforming others.
 
-# Methodology
+---
 
-## Data Collection - API
-* **Request data** from SpaceX API (rocket launch data)
-* **Decode response** using .json() and convert to a dataframe using .json_normalize()
-* **Request information** about the launches from SpaceX API using custom functions
-* **Create dictionary** from the data
-* **Create dataframe** from the dictionary
-* **Filter dataframe** to contain only Falcon 9 launches
-* **Replace missing values** of Payload Mass with calculated .mean()
-* **Export data** to csv file
+## Methodology
 
-## Data Collection - Web Scraping
-* **Request data** (Falcon 9 launch data) from Wikipedia
-* **Create BeautifulSoup object** from HTML response
-* **Extract column names** from HTML table header
-* **Collect data** from parsing HTML tables
-* **Create dictionary** from the data
-* **Create dataframe** from the dictionary
-* **Export data** to csv file
+### Data Collection via API:
+- Data requested from SpaceX API and processed into dataframes.  
+- Missing values for Payload Mass were replaced with the mean.  
 
-## Data Wrangling
-* **Convert outcomes** into 1 for a successful landing and 0 for an unsuccessful landing
+### Data Collection via Web Scraping:
+- Falcon 9 launch data extracted from Wikipedia using BeautifulSoup.  
+- Data organized into a structured dataframe and exported to CSV.
 
-## EDA with Visualization
-* **Create charts** to analyze relationships and show comparisons
+### Data Wrangling:
+- Landing outcomes converted into binary format: 1 (successful) or 0 (unsuccessful).
 
-## EDA with SQL
-* **Query the data** to understand more about the data
+### Exploratory Data Analysis (EDA):
+- Charts and visualizations created to analyze relationships between factors.  
+- SQL queries performed to derive insights into payload ranges and outcomes.  
 
-## Maps with Folium
-* **Create maps** to visualize launch sites, view launch outcomes and see distance to proximities
+### Mapping and Dashboards:
+- Maps created using Folium to visualize launch sites and their proximities.  
+- Dashboards designed with Plotly Dash to display success metrics.
 
-## Dashboard with Plotly Dash
-* **Create dashboard**
-* Pie chart showing successful launches
-* Scatter chart showing Payload Mass vs. Success Rate by Booster Version
+### Predictive Analytics:
+- Data standardized and split into training and test sets.  
+- Models built using GridSearchCV for parameter optimization.  
+- Algorithms tested: Logistic Regression, SVM, Decision Trees, and KNN.  
+- Performance evaluated using metrics like Jaccard Score, F1 Score, and Accuracy.
 
-## Predictive Analytics
-* **Create** NumPy array from the Class column
-* **Standardize** the data with StandardScaler. Fit and transform the data.
-* **Split** the data using train_test_split
-* **Create** a GridSearchCV object with cv=10 for parameter optimization
-* **Apply** GridSearchCV on different algorithms: logistic regression (LogisticRegression()), support vector machine (SVC()), decision tree (DecisionTreeClassifier()), K-Nearest Neighbor (KNeighborsClassifier())
-* **Calculate** accuracy on the test data using .score() for all models
-* **Assess** the confusion matrix for all models
-* **Identify** the best model using Jaccard_Score, F1_Score and Accuracy
+---
 
-# Conclusion
-* **Model Performance:** The models performed similarly on the test set with the decision tree model slightly outperforming
-* **Equator:** Most of the launch sites are near the equator for an additional natural boost - due to the rotational speed of earth - which helps save the cost of putting in extra fuel and boosters
-* **Coast:** All the launch sites are close to the coast
-* **Launch Success:** Increases over time
-* **KSC LC-39A:** Has the highest success rate among launch sites. Has a 100% success rate for launches less than 5,500 kg 
-* **Orbits:** ES-L1, GEO, HEO, and SSO have a 100% success rate
-* **Payload Mass:** Across all launch sites, the higher the payload mass (kg), the higher the success rate
+## Conclusion
 
-## Additional Things to Consider
-* **Dataset:** A larger dataset will help build on the predictive analytics results to help understand if the findings can be generalizable to a larger data set
-* **Feature Analysis / PCA:** Additional feature analysis or principal component analysis should be conducted to see if it can help improve accuracy
-* **XGBoost:** Is a powerful model which was not utilized in this study. It would be interesting to see if it outperforms the other classification models
+### Key Findings:
+- **Launch Success Trends:** Success rates have improved over time.  
+- **Geographical Advantage:** Launch sites near the equator and coast aid in cost reduction and reusability.  
+- **Optimal Launch Site:** KSC LC-39A achieves the highest success rates, especially for payloads under 5,500 kg.  
+- **Orbit Success Rates:** Orbits ES-L1, GEO, HEO, and SSO consistently succeed.  
+- **Payload Mass Impact:** Higher payload masses correlate with increased success rates.
+
+### Recommendations:
+1. **Expand Dataset:** A larger dataset will improve model reliability and result generalization.  
+2. **Advanced Feature Analysis:** Use techniques like PCA to refine predictive capabilities.  
+3. **Consider XGBoost:** Testing advanced models like XGBoost may enhance accuracy.  
